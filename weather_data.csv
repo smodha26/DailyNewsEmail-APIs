@@ -1,0 +1,9 @@
+date,temperature,humidity,condition
+2023-01-01,5,80,Rainy
+2023-01-02,7,75,Cloudy
+2023-01-03,6,78,Sunny
+2023-01-04,8,70,Partly Cloudy
+2024-01-01,4,85,Snowy
+2024-01-02,2,90,Snowy
+2024-01-03,3,88,Cloudy
+2024-01-04,1,92,Rainy
