@@ -2,9 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>HEY</h1>
+    <div class="container mt-5">
+        <h1 class="text-center">Weather Data</h1>
+        <form id="weatherForm">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="day">Day</label>
+                    <select class="form-control" id="day" name="day">
+                        <option value="">Select Day</option>
+                        <!-- Days will be populated here by JS -->
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="month">Month</label>
+                    <select class="form-control" id="month" name="month">
+                        <option value="">Select Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="year">Year</label>
+                    <select class="form-control" id="year" name="year">
+                        <option value="">Select Year</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" onclick="fetchWeather()">Get Weather</button>
+        </form>
+        <div id="weatherResult" class="mt-4"></div>
+        <div id="errorMessage" class="alert alert-danger mt-3" style="display:none;"></div>
+    </div>
+
+    <script>
+        // Populate days dropdown
+        const daySelect = document.getElementById('day');
+        for (let i = 1; i <= 31; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            daySelect.appendChild(option);
+        }
+
+        function fetchWeather() {
+            const day = document.getElementById('day').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+
+            if (!day || !month || !year) {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = 'Please select day, month, and year.';
+                return;
+            } else {
+                document.getElementById('errorMessage').style.display = 'none';
+            }
+
+            fetch(`/api/weather?day=${day}&month=${month}&year=${year}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('errorMessage').style.display = 'block';
+                        document.getElementById('errorMessage').textContent = data.error;
+                    } else {
+                        document.getElementById('weatherResult').innerHTML = `
+                            <h4>Weather on ${data.date}</h4>
+                            <p><strong>Temperature:</strong> ${data.temperature}°C</p>
+                            <p><strong>Humidity:</strong> ${data.humidity}%</p>
+                            <p><strong>Condition:</strong> ${data.condition}</p>
+                        `;
+                    }
+                });
+        }
+    </script>
 </body>
 </html>
