@@ -43,7 +43,13 @@ This is the HTML file that serves as the frontend of the application. It contain
   - A script that sends an API request to `/api/weather` with the selected date.
   - Handles responses by displaying the weather data or an error message if the date is incomplete or invalid.
 
-### 4. `Don't forget to install required dependencies`
+### 4. `How to run the project`
+
+   ```bash
+   python main.py
+   ```
+
+### 5. `Don't forget to install required dependencies`
 
    ```bash
    pip install flask pandas
