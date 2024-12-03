@@ -5,51 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Data</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(to bottom, #007bff, #e3f2fd);
+            color: white;
+            padding: 3rem 1rem;
+        }
+        .form-container {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        footer {
+            background: #f1f1f1;
+            color: #333;
+            padding: 1rem;
+        }
+        #errorMessage, #weatherResult {
+            z-index: 10;
+            position: relative;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Weather Data</h1>
-        <form id="weatherForm">
-            <div class="form-row">
-                <div class="col-md-4">
-                    <label for="day">Day</label>
-                    <select class="form-control" id="day" name="day">
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <h1>AWS Cloud Project: Weather Data Retrieval System</h1>
+    </section>
+
+    <!-- Instruction Card -->
+    <div class="card mt-4 shadow-lg" style="max-width: 800px; margin: 0 auto; border-radius: 10px;">
+        <div class="card-body">
+            <p class="text-center mt-3">
+                This Weather Data API project is a cloud-based application that allows users to select a specific date and retrieve weather information, including temperature, humidity, and condition. If no data exists for the chosen date, the application displays an appropriate error message, ensuring clarity for users.
+            </p>
+            <p class="text-center mt-3">
+                It leverages AWS services to implement a serverless architecture: <strong>S3</strong> hosts the website, <strong>DynamoDB</strong> stores the weather data, and <strong>API Gateway</strong> manages API requests. These requests trigger a <strong>Lambda function</strong>, which processes the input, fetches the relevant data from DynamoDB, and returns the results in a JSON response. 
+            </p>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-container mt-5 p-4" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="text-center mb-4">Get Weather Information</h2>
+        <p>
+            Test with a valid date: January 1, 2023
+        </p>
+        <form id="weatherForm" class="text-center">
+            <div class="row mb-3">
+                <div class="col">
+                    <select id="day" class="form-select" data-bs-dropup-auto="false">
                         <option value="">Select Day</option>
-                        <!-- Days will be populated here by JS -->
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label for="month">Month</label>
-                    <select class="form-control" id="month" name="month">
+                <div class="col">
+                    <select id="month" class="form-select" data-bs-dropup-auto="false">
                         <option value="">Select Month</option>
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
+                        <!-- Other months -->
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label for="year">Year</label>
-                    <select class="form-control" id="year" name="year">
+                <div class="col">
+                    <select id="year" class="form-select" data-bs-dropup-auto="false">
                         <option value="">Select Year</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
                     </select>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary mt-3" onclick="fetchWeather()">Get Weather</button>
+            <button type="button" class="btn btn-primary" onclick="fetchWeather()">Get Weather</button>
         </form>
+        <div id="errorMessage" class="text-danger mt-3" style="display: none;"></div>
         <div id="weatherResult" class="mt-4"></div>
-        <div id="errorMessage" class="alert alert-danger mt-3" style="display:none;"></div>
     </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 Weather Data API Project | Powered by AWS | Made by Sunny Modha</p>
+    </footer>
 
     <script>
         // Populate days dropdown
@@ -65,6 +101,9 @@
             const day = document.getElementById('day').value;
             const month = document.getElementById('month').value;
             const year = document.getElementById('year').value;
+
+            // Clear previous weather results before checking new inputs or fetching data
+            document.getElementById('weatherResult').innerHTML = '';
 
             if (!day || !month || !year) {
                 document.getElementById('errorMessage').style.display = 'block';
