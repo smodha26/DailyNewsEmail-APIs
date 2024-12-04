@@ -16,6 +16,15 @@
             border: 1px solid #ddd;
             border-radius: 10px;
         }
+        .form-container p {
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            text-align: center; 
+            color: #ff7300;
+            margin-top: 10px; 
+            margin-bottom: 20px; 
+        }
+
         footer {
             background: #f1f1f1;
             color: #333;
@@ -26,12 +35,30 @@
             position: relative;
             display: block;
         }
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            background: #f8f9fa; 
+            text-align: center; 
+            margin-top: 50px;
+        }
+        .gif-container img {
+            max-width: 100%; 
+            height: auto;
+            display: block;
+        }
+        .gif-container h2 {
+            margin-right: 100px; 
+        }
+
     </style>
 </head>
 <body>
     <!-- Hero Section -->
     <section class="hero-section text-center">
-        <h1>AWS Cloud Project: Weather Data Retrieval System</h1>
+        <h1>AWS Cloud Project: Serverless Weather Data Retrieval System</h1>
     </section>
 
     <!-- Instruction Card -->
@@ -41,7 +68,7 @@
                 This Weather Data API project is a cloud-based application that allows users to select a specific date and retrieve weather information, including temperature, humidity, and condition. If no data exists for the chosen date, the application displays an appropriate error message, ensuring clarity for users.
             </p>
             <p class="text-center mt-3">
-                It leverages AWS services to implement a serverless architecture: <strong>S3</strong> hosts the website, <strong>DynamoDB</strong> stores the weather data, and <strong>API Gateway</strong> manages API requests. These requests trigger a <strong>Lambda function</strong>, which processes the input, fetches the relevant data from DynamoDB, and returns the results in a JSON response. 
+                Serverless architecture: <strong>S3</strong> hosts the website, <strong>DynamoDB</strong> stores the weather data, and <strong>API Gateway</strong> manages API requests. These requests trigger a <strong>Lambda function</strong>, which processes the input, fetches the relevant data from DynamoDB, and returns the results in a JSON response. 
             </p>
         </div>
     </div>
@@ -50,7 +77,7 @@
     <div class="form-container mt-5 p-4" style="max-width: 600px; margin: 0 auto;">
         <h2 class="text-center mb-4">Get Weather Information</h2>
         <p>
-            Test with a valid date: January 1, 2023
+            Test with a valid date: 01/01/2023
         </p>
         <form id="weatherForm" class="text-center">
             <div class="row mb-3">
@@ -65,7 +92,15 @@
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
-                        <!-- Other months -->
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                     </select>
                 </div>
                 <div class="col">
@@ -81,6 +116,13 @@
         <div id="errorMessage" class="text-danger mt-3" style="display: none;"></div>
         <div id="weatherResult" class="mt-4"></div>
     </div>
+
+    <!-- Centered GIF Section -->
+    <div class="gif-container">
+        <h2 class="text-center mb-4">Serverless System Architecture</h2>
+        <img src="{{ url_for('static', filename='awsdata.gif') }}" alt="Loading animation">
+    </div>
+
 
     <!-- Footer -->
     <footer class="text-center mt-5">
